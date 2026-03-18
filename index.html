@@ -3,54 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Notcoin Clone</title>
+    <title>Selin Premium</title>
+    <script src="https://telegram.org"></script>
     <style>
-        body { 
-            background: radial-gradient(circle, #2c3e50, #000); 
-            color: white; 
-            text-align: center; 
-            font-family: 'Arial', sans-serif; 
-            margin: 0; 
-            height: 100vh; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            overflow: hidden; 
-            touch-action: manipulation;
-        }
-        #score { 
-            font-size: 70px; 
-            font-weight: bold; 
-            margin-bottom: 20px; 
-            text-shadow: 0 0 20px rgba(255,215,0,0.6); 
-        }
-        #coin { 
-            width: 280px; 
-            cursor: pointer; 
-            transition: transform 0.05s; 
-            -webkit-tap-highlight-color: transparent; 
-            filter: drop-shadow(0 0 20px gold); 
-        }
-        #coin:active { 
-            transform: scale(0.92); 
-        }
+        :root { --main-color: #00f2ff; --bg-color: #0a0b10; }
+        body { background: var(--bg-color); color: white; font-family: sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; height: 100vh; overflow: hidden; }
+        .header { margin-top: 40px; text-align: center; }
+        .score-container { font-size: 48px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+        .coin-icon { width: 40px; height: 40px; background: var(--main-color); border-radius: 50%; box-shadow: 0 0 15px var(--main-color); }
+        .coin-wrapper { position: relative; margin-top: 60px; transition: transform 0.1s; }
+        .main-coin { width: 280px; height: 280px; border-radius: 50%; border: 8px solid rgba(255, 255, 255, 0.05); box-shadow: 0 0 50px rgba(0, 242, 255, 0.2); object-fit: cover; }
+        .nav-menu { position: fixed; bottom: 20px; width: 90%; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; display: flex; justify-content: space-around; padding: 15px 0; }
+        .nav-item { color: #888; font-size: 12px; text-align: center; text-decoration: none; }
+        .nav-item.active { color: var(--main-color); }
     </style>
 </head>
 <body>
-    <div id="score">0</div>
-    <img id="coin" src="https://notcoin.com" alt="Coin">
-
+    <div class="header">
+        <div class="score-container"><div class="coin-icon"></div><span id="score">0</span></div>
+        <div style="color: #555; letter-spacing: 2px; font-size: 12px; margin-top: 5px;">SELIN COIN</div>
+    </div>
+    <div class="coin-wrapper" id="click-area"><img src="logo.png" class="main-coin"></div>
+    <div class="nav-menu">
+        <a href="#" class="nav-item active">🏠<br>Игра</a>
+        <a href="#" class="nav-item">👥<br>Друзья</a>
+        <a href="#" class="nav-item">⚡<br>Бусты</a>
+        <a href="#" class="nav-item">💰<br>Вывод</a>
+    </div>
     <script>
-        let count = 0;
         const scoreEl = document.getElementById('score');
-        const coin = document.getElementById('coin');
-
-        coin.addEventListener('touchstart', (e) => {
+        const clickArea = document.getElementById('click-area');
+        let score = parseInt(localStorage.getItem('selin_score')) || 0;
+        scoreEl.innerText = score;
+        clickArea.addEventListener('touchstart', (e) => {
             e.preventDefault();
-            count++;
-            scoreEl.innerText = count;
-            if (navigator.vibrate) navigator.vibrate(15);
+            score++;
+            scoreEl.innerText = score;
+            localStorage.setItem('selin_score', score);
+            if (window.Telegram?.WebApp?.HapticFeedback) {
+                window.Telegram.WebApp.HapticFeedback.impactOccurred('medium');
+            }
         });
     </script>
 </body>
