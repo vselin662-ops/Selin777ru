@@ -6,185 +6,121 @@
     <title>Selin Premium Elite</title>
     <script src="https://telegram.org"></script>
     <style>
-        :root { 
-            --main-color: #00f2ff; 
-            --bg-color: #0a0b10;
-            --accent-color: #7000ff;
-        }
-        
+        :root { --main-color: #00f2ff; --bg-color: #0a0b10; --accent-color: #7000ff; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-        body { 
-            background: radial-gradient(circle at center, #1a1c2c 0%, var(--bg-color) 100%);
-            color: white; font-family: 'Segoe UI', Roboto, sans-serif; 
-            margin: 0; display: flex; flex-direction: column; align-items: center; 
-            height: 100vh; overflow: hidden; 
-        }
+        body { background: radial-gradient(circle at center, #1a1c2c 0%, var(--bg-color) 100%); color: white; font-family: sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; height: 100vh; overflow: hidden; }
         
-        .screen { display: none; flex-direction: column; align-items: center; width: 100%; height: 100%; padding: 20px; padding-top: 40px; transition: 0.3s; }
+        .screen { display: none; flex-direction: column; align-items: center; width: 100%; height: 100%; padding: 20px; padding-top: 40px; }
         .screen.active { display: flex; animation: fadeIn 0.3s ease; }
-
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Прогресс-бар уровня */
-        .level-container { width: 80%; margin-top: 20px; text-align: center; }
-        .level-text { font-size: 14px; color: var(--main-color); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
-        .progress-bg { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
-        .progress-fill { width: 0%; height: 100%; background: linear-gradient(90deg, var(--main-color), var(--accent-color)); transition: width 0.3s; }
-
-        .score-container { font-size: 56px; font-weight: 900; display: flex; align-items: center; gap: 15px; margin-top: 10px; text-shadow: 0 0 20px rgba(0, 242, 255, 0.4); }
+        .score-container { font-size: 56px; font-weight: 900; margin-top: 20px; text-shadow: 0 0 20px rgba(0, 242, 255, 0.4); }
         
-        /* Анимация монеты */
-        .coin-wrapper { position: relative; margin-top: 40px; perspective: 1000px; }
-        .main-coin { 
-            width: 300px; height: 300px; border-radius: 50%; 
-            border: 10px solid rgba(255, 255, 255, 0.05); 
-            box-shadow: 0 0 60px rgba(0, 242, 255, 0.15), inset 0 0 20px rgba(255,255,255,0.1);
-            object-fit: cover; transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            user-select: none; -webkit-user-drag: none;
-        }
+        /* Стили монеты */
+        .coin-wrapper { position: relative; margin-top: 30px; }
+        .main-coin { width: 280px; height: 280px; border-radius: 50%; border: 8px solid rgba(255, 255, 255, 0.05); box-shadow: 0 0 50px rgba(0, 242, 255, 0.1); object-fit: cover; transition: transform 0.05s; user-select: none; }
 
-        /* Вылетающий текст +1 */
-        .plus-one {
-            position: absolute; color: var(--main-color); font-size: 32px; font-weight: bold;
-            pointer-events: none; animation: floatUp 0.8s forwards; z-index: 100;
-        }
-        @keyframes floatUp {
-            0% { opacity: 1; transform: translateY(0) scale(1); }
-            100% { opacity: 0; transform: translateY(-150px) scale(1.5); }
-        }
+        /* Энергия */
+        .energy-container { width: 80%; margin-top: 40px; text-align: left; }
+        .energy-text { font-size: 18px; font-weight: bold; margin-bottom: 5px; display: flex; align-items: center; gap: 5px; }
+        .energy-bar-bg { width: 100%; height: 12px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
+        .energy-bar-fill { width: 100%; height: 100%; background: linear-gradient(90deg, #ffe600, #ff9900); transition: width 0.2s; }
 
-        /* Нижнее меню */
-        .nav-menu { 
-            position: fixed; bottom: 20px; width: 92%; 
-            background: rgba(15, 16, 25, 0.8); backdrop-filter: blur(15px); 
-            border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; 
-            display: flex; justify-content: space-around; padding: 12px 0; z-index: 1000;
-        }
-        .nav-item { 
-            color: #555; font-size: 11px; text-align: center; text-decoration: none; 
-            border: none; background: none; cursor: pointer; transition: 0.2s;
-        }
-        .nav-item i { font-size: 24px; display: block; margin-bottom: 4px; }
-        .nav-item.active { color: var(--main-color); transform: translateY(-5px); }
+        .plus-one { position: absolute; color: var(--main-color); font-size: 32px; font-weight: bold; pointer-events: none; animation: floatUp 0.7s forwards; }
+        @keyframes floatUp { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-100px); } }
 
-        .card { 
-            background: rgba(255,255,255,0.03); width: 100%; border-radius: 20px; 
-            padding: 20px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05);
-        }
-        .btn-action {
-            background: linear-gradient(135deg, var(--main-color), var(--accent-color));
-            border: none; color: white; padding: 15px 30px; border-radius: 15px;
-            font-weight: bold; width: 100%; font-size: 16px; margin-top: 10px;
-        }
+        .nav-menu { position: fixed; bottom: 20px; width: 92%; background: rgba(15, 16, 25, 0.8); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; display: flex; justify-content: space-around; padding: 12px 0; }
+        .nav-item { color: #555; font-size: 11px; border: none; background: none; cursor: pointer; transition: 0.2s; }
+        .nav-item.active { color: var(--main-color); }
+        .card { background: rgba(255,255,255,0.03); width: 100%; border-radius: 20px; padding: 20px; margin-bottom: 15px; }
     </style>
 </head>
 <body>
 
     <audio id="tap-sound" src="tap.mp3" preload="auto"></audio>
 
-    <!-- ИГРА -->
     <div id="game-screen" class="screen active">
-        <div class="level-container">
-            <div class="level-text" id="level-name">Новичок Selin</div>
-            <div class="progress-bg"><div class="progress-fill" id="progress-bar"></div></div>
-        </div>
-
-        <div class="score-container">
-            <span id="score">0</span>
-        </div>
+        <div class="score-container" id="score">0</div>
         
         <div class="coin-wrapper" id="click-area">
             <img src="IMG_20260304_134158_002.webp" class="main-coin" id="coin-img">
         </div>
-    </div>
 
-    <!-- ДРУЗЬЯ -->
-    <div id="friends-screen" class="screen">
-        <h2>👥 Рефералы</h2>
-        <div class="card">
-            <h3>Пригласи бро</h3>
-            <p style="color: #888">Получай по 5,000 монет за каждого друга!</p>
-            <button class="btn-action" onclick="window.Telegram.WebApp.openTelegramLink('https://t.me')">Отправить приглашение</button>
+        <div class="energy-container">
+            <div class="energy-text">⚡️ <span id="energy-val">1000</span> / 1000</div>
+            <div class="energy-bar-bg"><div class="energy-bar-fill" id="energy-fill"></div></div>
         </div>
     </div>
 
-    <!-- БУСТЫ -->
-    <div id="boosts-screen" class="screen">
-        <h2>⚡ Улучшения</h2>
-        <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
-            <div style="text-align: left;">
-                <b style="display: block;">Мульти-тап</b>
-                <span style="font-size: 12px; color: #888;">+1 к клику</span>
-            </div>
-            <button style="background: #222; border: 1px solid var(--main-color); color: var(--main-color); border-radius: 10px; padding: 8px 15px;">500 💰</button>
-        </div>
-    </div>
+    <!-- Другие экраны (Друзья, Бусты, Вывод) -->
+    <div id="friends-screen" class="screen"><h2>👥 Друзья</h2><div class="card"><p>Приглашай и получай бонусы!</p></div></div>
+    <div id="boosts-screen" class="screen"><h2>⚡ Бусты</h2><div class="card"><p>Скоро: Увеличение лимита энергии</p></div></div>
+    <div id="withdraw-screen" class="screen"><h2>💰 Вывод</h2><div class="card"><p>Минимум: 1,000,000</p></div></div>
 
-    <!-- ВЫВОД -->
-    <div id="withdraw-screen" class="screen">
-        <h2>💰 Твой кошелек</h2>
-        <div class="card">
-            <div style="font-size: 12px; color: #888;">Доступно для вывода:</div>
-            <div style="font-size: 32px; font-weight: bold; margin: 10px 0;">0.00 $</div>
-            <p style="font-size: 12px;">Минимум: 1,000,000 монет</p>
-            <button class="btn-action" style="opacity: 0.5;">Вывести на TON</button>
-        </div>
-    </div>
-
-    <!-- МЕНЮ -->
     <div class="nav-menu">
-        <button onclick="showScreen('game-screen', this)" class="nav-item active"><i>🏠</i>Игра</button>
-        <button onclick="showScreen('friends-screen', this)" class="nav-item"><i>👥</i>Друзья</button>
-        <button onclick="showScreen('boosts-screen', this)" class="nav-item"><i>⚡</i>Бусты</button>
-        <button onclick="showScreen('withdraw-screen', this)" class="nav-item"><i>💰</i>Вывод</button>
+        <button onclick="showScreen('game-screen', this)" class="nav-item active">🏠<br>Игра</button>
+        <button onclick="showScreen('friends-screen', this)" class="nav-item">👥<br>Друзья</button>
+        <button onclick="showScreen('boosts-screen', this)" class="nav-item">⚡<br>Бусты</button>
+        <button onclick="showScreen('withdraw-screen', this)" class="nav-item">💰<br>Вывод</button>
     </div>
 
     <script>
+        let score = parseInt(localStorage.getItem('selin_score')) || 0;
+        let energy = parseInt(localStorage.getItem('selin_energy')) || 1000;
+        let lastTime = parseInt(localStorage.getItem('selin_last_time')) || Date.now();
+
         const scoreEl = document.getElementById('score');
-        const clickArea = document.getElementById('click-area');
+        const energyVal = document.getElementById('energy-val');
+        const energyFill = document.getElementById('energy-fill');
         const coinImg = document.getElementById('coin-img');
-        const progressBar = document.getElementById('progress-bar');
-        const levelName = document.getElementById('level-name');
         const tapSound = document.getElementById('tap-sound');
 
-        let score = parseInt(localStorage.getItem('selin_score')) || 0;
-        
-        function updateUI() {
-            scoreEl.innerText = score.toLocaleString();
-            // Расчет уровня (каждые 1000 кликов новый уровень)
-            let lvl = Math.floor(score / 1000) + 1;
-            let prog = (score % 1000) / 10;
-            progressBar.style.width = prog + '%';
-            levelName.innerText = `Уровень ${lvl}: Selin Power`;
+        // Восстановление энергии со временем
+        function recoverEnergy() {
+            const now = Date.now();
+            const diff = Math.floor((now - lastTime) / 1000); // секунд прошло
+            if (diff > 0) {
+                energy = Math.min(1000, energy + diff);
+                lastTime = now;
+            }
+            updateUI();
         }
 
-        clickArea.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            const touch = e.touches[0];
-            
-            // Звук
-            tapSound.currentTime = 0;
-            tapSound.play().catch(()=>{});
+        function updateUI() {
+            scoreEl.innerText = score.toLocaleString();
+            energyVal.innerText = energy;
+            energyFill.style.width = (energy / 10) + '%';
+            localStorage.setItem('selin_score', score);
+            localStorage.setItem('selin_energy', energy);
+            localStorage.setItem('selin_last_time', lastTime);
+        }
 
-            // Эффект +1
+        document.getElementById('click-area').addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            if (energy <= 0) return; // Нет энергии - нет клика
+
+            // Эффект нажатия
+            energy--;
+            score++;
+            
+            // Визуал +1
+            const touch = e.touches[0];
             const plus = document.createElement('div');
             plus.className = 'plus-one';
             plus.innerText = '+1';
-            plus.style.left = touch.clientX - 20 + 'px';
-            plus.style.top = touch.clientY - 40 + 'px';
+            plus.style.left = touch.clientX + 'px';
+            plus.style.top = touch.clientY + 'px';
             document.body.appendChild(plus);
-            setTimeout(() => plus.remove(), 800);
+            setTimeout(() => plus.remove(), 700);
 
             // Анимация монеты
-            coinImg.style.transform = 'scale(0.92) rotateX(10deg)';
-            setTimeout(() => coinImg.style.transform = 'scale(1) rotateX(0deg)', 100);
+            coinImg.style.transform = 'scale(0.95)';
+            setTimeout(() => coinImg.style.transform = 'scale(1)', 50);
 
-            // Логика
-            score++;
+            tapSound.currentTime = 0;
+            tapSound.play().catch(()=>{});
+
             updateUI();
-            localStorage.setItem('selin_score', score);
-
             if (window.Telegram?.WebApp?.HapticFeedback) {
                 window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
             }
@@ -197,10 +133,9 @@
             btn.classList.add('active');
         }
 
+        setInterval(recoverEnergy, 1000);
         updateUI();
-        // Инициализация Telegram WebApp
         window.Telegram.WebApp.expand();
-        window.Telegram.WebApp.ready();
     </script>
 </body>
 </html>
