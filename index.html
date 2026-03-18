@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Notcoin Clone</title>
+    <style>
+        body { 
+            background: radial-gradient(circle, #2c3e50, #000); 
+            color: white; 
+            text-align: center; 
+            font-family: 'Arial', sans-serif; 
+            margin: 0; 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            overflow: hidden; 
+            touch-action: manipulation;
+        }
+        #score { 
+            font-size: 70px; 
+            font-weight: bold; 
+            margin-bottom: 20px; 
+            text-shadow: 0 0 20px rgba(255,215,0,0.6); 
+        }
+        #coin { 
+            width: 280px; 
+            cursor: pointer; 
+            transition: transform 0.05s; 
+            -webkit-tap-highlight-color: transparent; 
+            filter: drop-shadow(0 0 20px gold); 
+        }
+        #coin:active { 
+            transform: scale(0.92); 
+        }
+    </style>
+</head>
+<body>
+    <div id="score">0</div>
+    <img id="coin" src="https://notcoin.com" alt="Coin">
+
+    <script>
+        let count = 0;
+        const scoreEl = document.getElementById('score');
+        const coin = document.getElementById('coin');
+
+        coin.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            count++;
+            scoreEl.innerText = count;
+            if (navigator.vibrate) navigator.vibrate(15);
+        });
+    </script>
+</body>
+</html>
