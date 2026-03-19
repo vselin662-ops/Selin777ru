@@ -1,5 +1,7 @@
 {
   "url": "https://vselin662-ops.github.io",
-  "name": "Selin777 Financial Node",
-  "iconUrl": "https://vselin662-ops.github.iologo.jpg"
+  "name": "Моё TON-приложение",
+  "iconUrl": "https://vselin662-ops.github.io/assets/icon.png",
+  "termsOfUseUrl": "https://vselin662-ops.github.io/docs/terms.html",
+  "privacyPolicyUrl": "https://vselin662-ops.github.io/docs/privacy.html"
 }
