@@ -3,127 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selin777 | CBDC & TON Node</title>
+    <title>Selin777 | Infrastructure Management</title>
     
-    <!-- SDK для TON Connect и Telegram -->
     <script src="https://unpkg.com"></script>
     <script src="https://telegram.org"></script>
-    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com" rel="stylesheet">
     
     <style>
         :root { --accent: #3b82f6; --bg: #010307; }
         body { background: var(--bg); font-family: 'Manrope', sans-serif; color: white; overflow-x: hidden; }
-        .bg-glow { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.06) 0%, transparent 50%), radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.04) 0%, transparent 50%); z-index: -1; }
-        .glass-card { background: rgba(255, 255, 255, 0.01); backdrop-filter: blur(45px) saturate(160%); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 32px; transition: 0.4s; }
-        .logo-frame { width: 58px; height: 58px; background: white; border-radius: 16px; padding: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); animation: float 5s infinite ease-in-out; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-        
-        /* Стилизация кнопки TON Connect под наш дизайн */
-        #ton-connect-button button { background: rgba(255, 255, 255, 0.03) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; color: white !important; border-radius: 20px !important; font-family: 'Manrope' !important; font-size: 10px !important; text-transform: uppercase !important; letter-spacing: 0.2em !important; height: 45px !important; }
-        
-        .btn-action { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; transition: 0.3s; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; }
-        .btn-action:hover { background: var(--accent); color: white; box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4); }
+        .bg-glow { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%), radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 50%); z-index: -1; }
+        .glass-card { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(40px); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 28px; transition: 0.4s; }
+        .logo-frame { width: 54px; height: 54px; background: white; border-radius: 14px; padding: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
+        #ton-connect-button button { background: #3b82f6 !important; border-radius: 14px !important; font-size: 11px !important; font-weight: 800 !important; color: white !important; height: 44px !important; }
+        .btn-action { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; transition: 0.2s; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; color: #94a3b8; }
+        .btn-action:hover { background: var(--accent); color: white; border-color: transparent; box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4); }
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(30px); z-index: 1000; align-items: center; justify-content: center; opacity: 0; transition: 0.3s; }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .ledger-line { font-family: monospace; font-size: 8px; color: #3b82f6; opacity: 0.8; letter-spacing: 0.05em; margin-bottom: 2px; }
     </style>
 </head>
-<body class="p-6 md:p-12">
+<body class="p-4 md:p-10">
     <div class="bg-glow"></div>
 
-    <!-- Header -->
-    <header class="max-w-6xl mx-auto flex justify-between items-center mb-24">
-        <div class="flex items-center gap-6">
-            <div class="logo-frame"><img src="logo.jpg" class="w-full h-full object-contain rounded-xl" alt="Selin777"></div>
+    <!-- Interface Header -->
+    <header class="max-w-6xl mx-auto flex justify-between items-start mb-20">
+        <div class="flex items-center gap-5">
+            <div class="logo-frame"><img src="logo.jpg" class="w-full h-full object-contain rounded-lg" alt="Selin777 Node"></div>
             <div>
-                <h1 class="text-3xl font-800 tracking-tighter uppercase italic leading-tight">Selin<span class="text-blue-500">777</span></h1>
+                <h1 class="text-3xl font-800 tracking-tighter uppercase italic leading-none mb-2 tracking-[-0.05em]">Selin<span class="text-blue-500">777</span></h1>
                 <div class="flex items-center gap-2">
-                    <span id="network-status" class="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-pulse"></span>
-                    <span id="status-text" class="text-[8px] text-gray-600 uppercase tracking-[0.4em] font-bold italic font-mono">Status: Awaiting Wallet</span>
+                    <span id="net-indicator" class="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-pulse"></span>
+                    <span id="status-text" class="text-[7px] text-gray-500 uppercase tracking-[0.4em] font-bold font-mono">Node ID: 777-OPS | Secure Connection</span>
                 </div>
             </div>
         </div>
-        <!-- Место для кнопки TON Connect -->
         <div id="ton-connect-button"></div>
     </header>
 
     <main class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-8">
-        <!-- Terminal -->
+        
+        <!-- Main Asset Terminal -->
         <div class="lg:col-span-3 glass-card p-12 relative overflow-hidden">
-            <div class="flex justify-between items-start mb-14">
+            <div class="flex justify-between items-start mb-16">
                 <div>
-                    <h2 class="text-gray-600 text-[10px] uppercase tracking-[0.5em] font-800 mb-4 italic">Личные цифровые активы</h2>
+                    <p class="text-[9px] text-gray-600 uppercase tracking-[0.5em] font-800 mb-4 italic">Liquidity Control (Digital Ruble)</p>
                     <div class="text-8xl font-800 tracking-tighter italic">0<span class="text-blue-600">.00</span> <span class="text-2xl align-top text-gray-800 italic">₽Ц</span></div>
                 </div>
                 <div class="text-right">
-                    <span id="auth-badge" class="text-[9px] text-yellow-500 font-800 uppercase tracking-[0.2em] italic border border-yellow-500/30 px-4 py-2 rounded-full">Disconnected</span>
+                    <div id="auth-status" class="text-[8px] text-gray-500 font-800 border border-white/10 px-4 py-2 rounded-full uppercase italic tracking-widest bg-white/5">Waiting Authorization</div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <button class="btn-action p-6" onclick="handleTx()">Deposit</button>
-                <button class="btn-action p-6" onclick="handleTx()">Withdraw</button>
-                <button class="btn-action p-6" onclick="handleTx()">Swap</button>
-                <button class="btn-action p-6 opacity-30">Node 777</button>
+            <!-- Operational Controllers -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
+                <button onclick="openPanel('deposit')" class="btn-action py-6">Deposit</button>
+                <button onclick="openPanel('withdraw')" class="btn-action py-6">Withdraw</button>
+                <button onclick="openPanel('swap')" class="btn-action py-6">Swap Assets</button>
+                <button onclick="openPanel('node')" class="btn-action py-6">Node Config</button>
+            </div>
+
+            <!-- High-Frequency Ledger -->
+            <div class="bg-black/50 rounded-3xl p-6 border border-white/5 h-32 overflow-hidden relative">
+                <div class="absolute top-2 left-6 text-[7px] text-gray-700 font-bold uppercase tracking-[0.5em]">Real-Time Protocol Feed</div>
+                <div id="ledger-stream" class="mt-6 flex flex-col font-mono"></div>
             </div>
         </div>
 
-        <div class="lg:col-span-1 glass-card p-10 flex flex-col justify-between border-t-2 border-blue-600">
+        <!-- Infrastructure Sidebar -->
+        <div class="lg:col-span-1 glass-card p-10 flex flex-col justify-between border-t-4 border-blue-600">
             <div>
-                <h3 class="text-xs font-800 uppercase tracking-widest mb-6 text-blue-500 italic">Selin-Ledger v1</h3>
-                <p class="text-[10px] text-gray-500 leading-relaxed uppercase font-bold tracking-[0.1em] mb-8">
-                    Имитация финансового узла для интеграции в Telegram & Платформу ЦР.
-                </p>
+                <h3 class="text-[10px] font-800 uppercase tracking-[0.4em] mb-8 text-blue-500 italic font-mono">Infrastructure Hub</h3>
+                <div class="space-y-6">
+                    <div>
+                        <p class="text-[7px] text-gray-700 uppercase font-bold mb-1">Standard:</p>
+                        <p class="text-[10px] font-800 text-gray-400">ISO 20022 Verified</p>
+                    </div>
+                    <div>
+                        <p class="text-[7px] text-gray-700 uppercase font-bold mb-1">Security:</p>
+                        <p class="text-[10px] font-800 text-gray-400">AES-256-GCM GOST</p>
+                    </div>
+                </div>
             </div>
-            <div class="space-y-3 pt-6 border-t border-white/5">
-                <div id="wallet-address" class="text-[7px] text-gray-700 font-bold uppercase truncate">Connect Wallet to view address</div>
-                <div class="text-[8px] text-gray-800 font-bold uppercase italic">Security: TON Connect SDK 2.0</div>
-            </div>
+            <div id="wallet-data" class="text-[7px] text-gray-800 font-bold uppercase font-mono break-all opacity-40 italic">Unauthorized Session</div>
         </div>
     </main>
 
-    <footer class="max-w-6xl mx-auto mt-32 pb-12 flex flex-col md:flex-row justify-between items-center text-[9px] text-gray-800 font-bold uppercase tracking-[0.5em] italic">
-        <span>&copy; 2026 Selin777 Infrastructure</span>
-        <span class="mt-4 md:mt-0 opacity-40">Blockchain & CBDC Sandbox</span>
+    <!-- Operational Terminals -->
+    <div id="terminal-overlay" class="modal-overlay">
+        <div class="glass-card max-w-md w-full p-12 text-center border-blue-500/30">
+            <h4 id="terminal-header" class="text-2xl font-800 uppercase italic mb-6 tracking-tighter text-blue-500">Terminal</h4>
+            <div id="terminal-content" class="text-[11px] text-gray-400 uppercase tracking-[0.2em] leading-[2.5] mb-12 italic font-bold"></div>
+            <button onclick="closePanel()" class="w-full py-5 btn-action text-white hover:bg-blue-600 transition tracking-[0.3em]">Close Gateway</button>
+        </div>
+    </div>
+
+    <footer class="max-w-6xl mx-auto mt-32 pb-12 flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-800 font-bold uppercase tracking-[0.5em] italic">
+        <span>&copy; 2026 Selin777 Infrastructure Protocol</span>
+        <span class="opacity-50">Authorized Financial Software</span>
     </footer>
 
     <script>
-        // Инициализация TON Connect
         const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
             manifestUrl: 'https://vselin662-ops.github.io',
             buttonRootId: 'ton-connect-button'
         });
 
-        // Отслеживание состояния кошелька
         tonConnectUI.onStatusChange(wallet => {
-            const statusText = document.getElementById('status-text');
-            const networkStatus = document.getElementById('network-status');
-            const authBadge = document.getElementById('auth-badge');
-            const walletAddr = document.getElementById('wallet-address');
+            const ind = document.getElementById('net-indicator');
+            const stat = document.getElementById('status-text');
+            const auth = document.getElementById('auth-status');
+            const wall = document.getElementById('wallet-data');
 
             if (wallet) {
-                statusText.innerText = "Status: Wallet Connected";
-                networkStatus.classList.replace('bg-yellow-500', 'bg-green-500');
-                authBadge.innerText = "Authorized";
-                authBadge.classList.replace('text-yellow-500', 'text-green-500');
-                authBadge.classList.replace('border-yellow-500/30', 'border-green-500/30');
-                walletAddr.innerText = "Addr: " + wallet.account.address;
-                console.log('Wallet connected:', wallet);
+                ind.classList.replace('bg-yellow-500', 'bg-green-500');
+                stat.innerText = "Node ID: 777-OPS | Connected to TON Mainnet";
+                auth.innerText = "Identity Verified";
+                auth.classList.replace('text-gray-500', 'text-green-500');
+                wall.innerText = wallet.account.address;
+                wall.style.opacity = "1";
             } else {
-                statusText.innerText = "Status: Awaiting Wallet";
-                networkStatus.classList.replace('bg-green-500', 'bg-yellow-500');
-                authBadge.innerText = "Disconnected";
-                walletAddr.innerText = "Connect Wallet to view address";
+                ind.classList.replace('bg-green-500', 'bg-yellow-500');
+                stat.innerText = "Node ID: 777-OPS | Secure Connection";
+                auth.innerText = "Waiting Authorization";
+                wall.style.opacity = "0.4";
             }
         });
 
-        function handleTx() {
-            if (!tonConnectUI.connected) {
-                alert("Пожалуйста, сначала подключите ваш TON кошелек!");
-                tonConnectUI.openModal();
-            } else {
-                alert("Функция транзакций будет доступна после интеграции с Sandbox ЦБ.");
-            }
+        function openPanel(type) {
+            const overlay = document.getElementById('terminal-overlay');
+            const header = document.getElementById('terminal-header');
+            const content = document.getElementById('terminal-content');
+
+            const modules = {
+                deposit: ["Asset Deposit Gate", "Select Liquidity Source:<br>● Central Bank Digital Ruble Platform<br>● Cross-Border Bridge (TON Assets)<br>● Fiat-to-CBDC Settlement Protocol"],
+                withdraw: ["Asset Withdrawal Gate", "Available Exit Nodes:<br>● Personalized TON Wallet ID<br>● Partner Bank FIAT Settlement (MIR)<br>● SBP 2.0 Settlement Core"],
+                swap: ["Asset Swap Engine", "Market Exchange Ratio:<br>1.00 TON / 642.50 ₽Ц<br>Transaction Fee: 0.1%<br>Liquidity Pool: ACTIVE"],
+                node: ["System Configuration", "Local Node Status:<br>CPU: 12% | LATENCY: 18ms<br>STORAGE: 512GB (ENC: AES-256)<br>LOCATION: MOSCOW INFRA HUB"]
+            };
+
+            header.innerText = modules[type][0];
+            content.innerHTML = modules[type][1];
+            overlay.classList.add('active');
         }
+
+        function closePanel() { document.getElementById('terminal-overlay').classList.remove('active'); }
+
+        // Live Ledger Engine
+        setInterval(() => {
+            const stream = document.getElementById('ledger-stream');
+            const line = document.createElement('div');
+            line.className = 'ledger-line';
+            const h = Math.random().toString(36).substring(7).toUpperCase();
+            line.innerText = `[${new Date().toLocaleTimeString()}] SYNC_BLOCK: #${Math.floor(Math.random()*10000)} -> BROADCASTER: CBR_NODE_07 -> HASH: ${h}... OK.`;
+            if (stream.childNodes.length > 5) stream.removeChild(stream.firstChild);
+            stream.appendChild(line);
+        }, 2500);
     </script>
 </body>
 </html>
