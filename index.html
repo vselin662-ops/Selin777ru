@@ -2,140 +2,192 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Selin Premium Elite</title>
-    <script src="https://telegram.org"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selin777 | Digital Ruble Ecosystem 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
     <style>
-        :root { --main-color: #00f2ff; --bg-color: #0a0b10; --accent-color: #7000ff; }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { background: radial-gradient(circle at center, #1a1c2c 0%, var(--bg-color) 100%); color: white; font-family: sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; height: 100vh; overflow: hidden; }
+        :root { --accent: #3b82f6; --cbr-red: #ff4d4d; }
+        body {
+            background: #020408;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        /* Живой фон */
+        .bg-mesh {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 70% 10%, #1e293b 0%, transparent 40%),
+                        radial-gradient(circle at 10% 90%, #0f172a 0%, transparent 40%);
+            z-index: -1;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 32px;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .glass-card:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
         
-        .screen { display: none; flex-direction: column; align-items: center; width: 100%; height: 100%; padding: 20px; padding-top: 40px; }
-        .screen.active { display: flex; animation: fadeIn 0.3s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .btn-main {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.5);
+        }
 
-        .score-container { font-size: 56px; font-weight: 900; margin-top: 20px; text-shadow: 0 0 20px rgba(0, 242, 255, 0.4); }
-        
-        /* Стили монеты */
-        .coin-wrapper { position: relative; margin-top: 30px; }
-        .main-coin { width: 280px; height: 280px; border-radius: 50%; border: 8px solid rgba(255, 255, 255, 0.05); box-shadow: 0 0 50px rgba(0, 242, 255, 0.1); object-fit: cover; transition: transform 0.05s; user-select: none; }
+        /* Анимация модального окна */
+        #modal { display: none; opacity: 0; transition: 0.4s; }
+        #modal.active { display: flex; opacity: 1; }
+        .modal-content { transform: translateY(20px); transition: 0.4s; }
+        #modal.active .modal-content { transform: translateY(0); }
 
-        /* Энергия */
-        .energy-container { width: 80%; margin-top: 40px; text-align: left; }
-        .energy-text { font-size: 18px; font-weight: bold; margin-bottom: 5px; display: flex; align-items: center; gap: 5px; }
-        .energy-bar-bg { width: 100%; height: 12px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
-        .energy-bar-fill { width: 100%; height: 100%; background: linear-gradient(90deg, #ffe600, #ff9900); transition: width 0.2s; }
-
-        .plus-one { position: absolute; color: var(--main-color); font-size: 32px; font-weight: bold; pointer-events: none; animation: floatUp 0.7s forwards; }
-        @keyframes floatUp { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-100px); } }
-
-        .nav-menu { position: fixed; bottom: 20px; width: 92%; background: rgba(15, 16, 25, 0.8); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; display: flex; justify-content: space-around; padding: 12px 0; }
-        .nav-item { color: #555; font-size: 11px; border: none; background: none; cursor: pointer; transition: 0.2s; }
-        .nav-item.active { color: var(--main-color); }
-        .card { background: rgba(255,255,255,0.03); width: 100%; border-radius: 20px; padding: 20px; margin-bottom: 15px; }
+        .cbr-logo-pulse {
+            filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5));
+            animation: pulse-cbr 3s infinite;
+        }
+        @keyframes pulse-cbr { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
     </style>
 </head>
-<body>
+<body class="p-4 md:p-12">
+    <div class="bg-mesh"></div>
 
-    <audio id="tap-sound" src="tap.mp3" preload="auto"></audio>
+    <!-- Header -->
+    <header class="max-w-6xl mx-auto flex justify-between items-center mb-16">
+        <div class="text-3xl font-800 tracking-tighter uppercase italic">Selin<span class="text-blue-500">777</span></div>
+        <div class="flex items-center gap-6">
+            <div class="hidden md:flex items-center glass-card px-4 py-2 text-[10px] font-bold text-blue-400 tracking-widest uppercase">
+                <span class="w-2 h-2 bg-blue-500 rounded-full mr-2 animate-ping"></span> Node: Central Bank Verified
+            </div>
+            <button class="px-6 py-2 glass-card text-xs font-bold hover:bg-white/10 transition uppercase tracking-widest">ID: 777-OPS</button>
+        </div>
+    </header>
 
-    <div id="game-screen" class="screen active">
-        <div class="score-container" id="score">0</div>
+    <main class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        <div class="coin-wrapper" id="click-area">
-            <img src="IMG_20260304_134158_002.webp" class="main-coin" id="coin-img">
+        <!-- Главный Баланс -->
+        <div class="lg:col-span-2 glass-card p-10 relative overflow-hidden flex flex-col justify-center">
+            <h2 class="text-gray-500 text-[10px] mb-4 uppercase tracking-[0.4em] font-bold">Текущие активы ЦР</h2>
+            <div class="text-7xl font-800 mb-8 tracking-tighter">
+                <span id="balance">0</span><span class="text-blue-500">.00</span> <span class="text-2xl align-top text-gray-400 font-light italic">₽Ц</span>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <button onclick="openModal()" class="btn-main p-5 rounded-2xl text-center font-800 text-[10px] uppercase tracking-widest transition-all active:scale-95 hover:brightness-110">Внести</button>
+                <button class="glass-card p-5 rounded-2xl text-center font-bold text-[10px] uppercase tracking-widest hover:bg-white/5">Вывести</button>
+                <button class="glass-card p-5 rounded-2xl text-center font-bold text-[10px] uppercase tracking-widest hover:bg-white/5">Обмен</button>
+                <button class="glass-card p-5 rounded-2xl text-center font-bold text-[10px] uppercase tracking-widest hover:bg-white/5 opacity-40">NFT-Карта</button>
+            </div>
         </div>
 
-        <div class="energy-container">
-            <div class="energy-text">⚡️ <span id="energy-val">1000</span> / 1000</div>
-            <div class="energy-bar-bg"><div class="energy-bar-fill" id="energy-fill"></div></div>
+        <!-- Виджет Стейкинга -->
+        <div class="glass-card p-10 flex flex-col justify-between border-t-4 border-blue-500">
+            <div>
+                <div class="flex justify-between items-center mb-8">
+                    <h3 class="text-xl font-bold italic tracking-tighter">STAKING 2.0</h3>
+                    <div class="text-[10px] bg-green-500/20 text-green-400 px-3 py-1 rounded-full font-bold">PROFITABLE</div>
+                </div>
+                <div class="text-4xl font-800 text-white mb-2">12.5% <span class="text-xs text-gray-500 font-normal">APY</span></div>
+                <p class="text-gray-500 text-xs leading-relaxed mb-6 font-light">Автоматическое начисление цифрового рубля за поддержание ликвидности узла.</p>
+            </div>
+            <button class="w-full py-5 rounded-2xl bg-white text-black font-800 uppercase text-[10px] tracking-[0.2em] hover:bg-blue-500 hover:text-white transition-all">В стейкинг</button>
+        </div>
+
+        <!-- Whitepaper & Roadmap Section -->
+        <div class="lg:col-span-3 mt-12">
+            <h3 class="text-2xl font-800 uppercase italic tracking-tighter mb-10 text-center">Белая карта развития (Whitepaper)</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-card p-8 border-l-4 border-blue-500">
+                    <div class="text-blue-500 font-bold mb-4 tracking-tighter text-sm italic">PHASE 01: GENESIS</div>
+                    <h4 class="font-800 mb-3 uppercase text-sm">Интеграция с ЦБ РФ</h4>
+                    <p class="text-xs text-gray-500 font-light leading-relaxed italic">Запуск официального шлюза обмена между банковским сектором и цифровым протоколом Селина.</p>
+                </div>
+                <div class="glass-card p-8 border-l-4 border-purple-500 opacity-70">
+                    <div class="text-purple-500 font-bold mb-4 tracking-tighter text-sm italic">PHASE 02: ECOSYSTEM</div>
+                    <h4 class="font-800 mb-3 uppercase text-sm">Selin Pay 2026</h4>
+                    <p class="text-xs text-gray-500 font-light leading-relaxed italic">Внедрение оплаты QR-кодами в магазинах-партнерах с автоматическим кэшбеком в ЦР.</p>
+                </div>
+                <div class="glass-card p-8 border-l-4 border-gray-600 opacity-40">
+                    <div class="text-gray-500 font-bold mb-4 tracking-tighter text-sm italic">PHASE 03: GLOBAL</div>
+                    <h4 class="font-800 mb-3 uppercase text-sm">Cross-border Bridge</h4>
+                    <p class="text-xs text-gray-500 font-light leading-relaxed italic">Выход на международные цифровые рынки и запуск системы мгновенной конвертации валют.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal: Внести средства с логотипом ЦБ РФ -->
+    <div id="modal" class="fixed inset-0 z-50 items-center justify-center bg-black/95 backdrop-blur-2xl p-4">
+        <div class="modal-content glass-card max-w-sm w-full p-8 border-blue-500/40 shadow-2xl shadow-blue-500/10">
+            
+            <!-- Анимированный Логотип ЦБ -->
+            <div class="flex flex-col items-center mb-10">
+                <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mb-4 cbr-logo-pulse shadow-[0_0_30px_rgba(255,255,255,0.1)]">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org">
+                        <path d="M7 21V3H13.5C16.5376 3 19 5.46243 19 8.5C19 11.5376 16.5376 14 13.5 14H10M7 14H15M7 17H13" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="text-[11px] uppercase tracking-[0.5em] font-800 text-blue-400">Центральный Банк</div>
+                <div class="text-[8px] text-gray-500 uppercase tracking-widest mt-1">Официальный цифровой шлюз</div>
+            </div>
+
+            <div class="space-y-4">
+                <button class="w-full glass-card p-5 flex items-center justify-between hover:bg-blue-600/10 transition-all border-l-4 border-blue-500">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center text-blue-400 font-bold">₽Ц</div>
+                        <div class="text-left font-800 uppercase italic text-[11px] tracking-tighter">Прямой перевод ЦБ</div>
+                    </div>
+                    <span class="text-green-400 text-[8px] font-bold animate-pulse">ACTIVE</span>
+                </button>
+                
+                <button class="w-full glass-card p-5 flex items-center gap-4 opacity-40 grayscale cursor-not-allowed">
+                    <div class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-gray-500 text-xs font-bold">QR</div>
+                    <div class="text-left font-800 uppercase italic text-[11px] tracking-tighter text-gray-500">SBP Fast Pay</div>
+                </button>
+            </div>
+            
+            <button onclick="closeModal()" class="w-full mt-10 py-4 text-[10px] font-800 text-gray-500 hover:text-white uppercase tracking-widest transition">Закрыть терминал</button>
         </div>
     </div>
 
-    <!-- Другие экраны (Друзья, Бусты, Вывод) -->
-    <div id="friends-screen" class="screen"><h2>👥 Друзья</h2><div class="card"><p>Приглашай и получай бонусы!</p></div></div>
-    <div id="boosts-screen" class="screen"><h2>⚡ Бусты</h2><div class="card"><p>Скоро: Увеличение лимита энергии</p></div></div>
-    <div id="withdraw-screen" class="screen"><h2>💰 Вывод</h2><div class="card"><p>Минимум: 1,000,000</p></div></div>
-
-    <div class="nav-menu">
-        <button onclick="showScreen('game-screen', this)" class="nav-item active">🏠<br>Игра</button>
-        <button onclick="showScreen('friends-screen', this)" class="nav-item">👥<br>Друзья</button>
-        <button onclick="showScreen('boosts-screen', this)" class="nav-item">⚡<br>Бусты</button>
-        <button onclick="showScreen('withdraw-screen', this)" class="nav-item">💰<br>Вывод</button>
-    </div>
+    <footer class="max-w-6xl mx-auto mt-24 pb-12 text-center text-gray-700 text-[9px] uppercase tracking-[0.5em] font-medium">
+        &copy; 2026 SELIN777 ECOSYSTEM | POWERED BY CBDC PROTOCOL | SECURED BY BANK OF RUSSIA
+    </footer>
 
     <script>
-        let score = parseInt(localStorage.getItem('selin_score')) || 0;
-        let energy = parseInt(localStorage.getItem('selin_energy')) || 1000;
-        let lastTime = parseInt(localStorage.getItem('selin_last_time')) || Date.now();
-
-        const scoreEl = document.getElementById('score');
-        const energyVal = document.getElementById('energy-val');
-        const energyFill = document.getElementById('energy-fill');
-        const coinImg = document.getElementById('coin-img');
-        const tapSound = document.getElementById('tap-sound');
-
-        // Восстановление энергии со временем
-        function recoverEnergy() {
-            const now = Date.now();
-            const diff = Math.floor((now - lastTime) / 1000); // секунд прошло
-            if (diff > 0) {
-                energy = Math.min(1000, energy + diff);
-                lastTime = now;
-            }
-            updateUI();
+        // Анимация накрутки баланса
+        function animateBalance(target) {
+            let current = 0;
+            const element = document.getElementById('balance');
+            const step = target / 100;
+            const interval = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                    element.innerText = target.toLocaleString('ru-RU');
+                    clearInterval(interval);
+                } else {
+                    element.innerText = Math.floor(current).toLocaleString('ru-RU');
+                }
+            }, 20);
         }
 
-        function updateUI() {
-            scoreEl.innerText = score.toLocaleString();
-            energyVal.innerText = energy;
-            energyFill.style.width = (energy / 10) + '%';
-            localStorage.setItem('selin_score', score);
-            localStorage.setItem('selin_energy', energy);
-            localStorage.setItem('selin_last_time', lastTime);
+        // Управление модальным окном
+        function openModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.add('active');
+            modal.style.display = 'flex';
+        }
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.remove('active');
+            setTimeout(() => { modal.style.display = 'none'; }, 400);
         }
 
-        document.getElementById('click-area').addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            if (energy <= 0) return; // Нет энергии - нет клика
+        // Запуск анимации при загрузке
+        window.onload = () => animateBalance(777000);
 
-            // Эффект нажатия
-            energy--;
-            score++;
-            
-            // Визуал +1
-            const touch = e.touches[0];
-            const plus = document.createElement('div');
-            plus.className = 'plus-one';
-            plus.innerText = '+1';
-            plus.style.left = touch.clientX + 'px';
-            plus.style.top = touch.clientY + 'px';
-            document.body.appendChild(plus);
-            setTimeout(() => plus.remove(), 700);
-
-            // Анимация монеты
-            coinImg.style.transform = 'scale(0.95)';
-            setTimeout(() => coinImg.style.transform = 'scale(1)', 50);
-
-            tapSound.currentTime = 0;
-            tapSound.play().catch(()=>{});
-
-            updateUI();
-            if (window.Telegram?.WebApp?.HapticFeedback) {
-                window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
-            }
-        });
-
-        function showScreen(screenId, btn) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
-            document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-        }
-
-        setInterval(recoverEnergy, 1000);
-        updateUI();
-        window.Telegram.WebApp.expand();
+        // Закрытие по клику вне окна
+        window.onclick = (e) => { if (e.target == document.getElementById('modal')) closeModal(); }
     </script>
 </body>
 </html>
