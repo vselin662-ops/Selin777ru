@@ -3,190 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selin777 | Digital Ruble Ecosystem 2026</title>
+    <title>Selin777 | Infrastructure Premium</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com" rel="stylesheet">
     <style>
-        :root { --accent: #3b82f6; --cbr-red: #ff4d4d; }
-        body {
-            background: #020408;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            color: white;
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
-        /* Живой фон */
-        .bg-mesh {
+        :root { --accent: #3b82f6; --bg: #03050a; }
+        body { background: var(--bg); font-family: 'Manrope', sans-serif; color: white; overflow-x: hidden; }
+        
+        /* Глубокий процедурный фон */
+        .bg-layer {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 70% 10%, #1e293b 0%, transparent 40%),
-                        radial-gradient(circle at 10% 90%, #0f172a 0%, transparent 40%);
+            background: 
+                radial-gradient(circle at 90% 0%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 10% 100%, rgba(139, 92, 246, 0.05) 0%, transparent 40%);
             z-index: -1;
         }
-        .glass-card {
+
+        /* Эффект матового металла/стекла */
+        .premium-card {
+            background: rgba(255, 255, 255, 0.015);
+            backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 30px;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .premium-card:hover {
             background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 32px;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .glass-card:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-        
-        .btn-main {
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.5);
+            border-color: rgba(59, 130, 246, 0.3);
+            transform: translateY(-4px);
         }
 
-        /* Анимация модального окна */
-        #modal { display: none; opacity: 0; transition: 0.4s; }
+        .selin-logo-wrap {
+            width: 58px; height: 58px; padding: 2px;
+            background: linear-gradient(135deg, #fff, #cbd5e1);
+            border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5);
+        }
+
+        /* Кнопки с неоновым контуром */
+        .btn-action {
+            position: relative; overflow: hidden;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px; transition: 0.3s;
+        }
+        .btn-action:hover {
+            background: var(--accent);
+            color: white; box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+            border-color: transparent;
+        }
+
+        /* Заглушка под график */
+        .chart-placeholder {
+            height: 120px; width: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.05), transparent);
+            position: relative; overflow: hidden;
+        }
+        .chart-line {
+            position: absolute; bottom: 30%; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            filter: drop-shadow(0 0 8px #3b82f6);
+            clip-path: polygon(0 50%, 10% 40%, 20% 60%, 30% 30%, 40% 70%, 50% 20%, 60% 80%, 70% 40%, 80% 60%, 90% 30%, 100% 50%);
+        }
+
+        #modal { display: none; opacity: 0; transition: 0.5s; z-index: 1000; }
         #modal.active { display: flex; opacity: 1; }
-        .modal-content { transform: translateY(20px); transition: 0.4s; }
-        #modal.active .modal-content { transform: translateY(0); }
-
-        .cbr-logo-pulse {
-            filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5));
-            animation: pulse-cbr 3s infinite;
-        }
-        @keyframes pulse-cbr { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
     </style>
 </head>
-<body class="p-4 md:p-12">
-    <div class="bg-mesh"></div>
+<body class="p-4 md:p-10">
+    <div class="bg-layer"></div>
 
-    <!-- Header -->
-    <header class="max-w-6xl mx-auto flex justify-between items-center mb-16">
-        <div class="text-3xl font-800 tracking-tighter uppercase italic">Selin<span class="text-blue-500">777</span></div>
+    <!-- Навигация -->
+    <header class="max-w-7xl mx-auto flex justify-between items-center mb-16 animate-fade-in">
         <div class="flex items-center gap-6">
-            <div class="hidden md:flex items-center glass-card px-4 py-2 text-[10px] font-bold text-blue-400 tracking-widest uppercase">
-                <span class="w-2 h-2 bg-blue-500 rounded-full mr-2 animate-ping"></span> Node: Central Bank Verified
+            <div class="selin-logo-wrap">
+                <img src="9d7715cd134e61f599f9267eff20faa3_d9672acb-028e-470c-bfc0-2018c873e653.jpg" class="w-full h-full object-contain rounded-xl" alt="Selin777">
             </div>
-            <button class="px-6 py-2 glass-card text-xs font-bold hover:bg-white/10 transition uppercase tracking-widest">ID: 777-OPS</button>
+            <div class="flex flex-col">
+                <span class="text-3xl font-800 tracking-tighter uppercase italic leading-tight">Selin<span class="text-blue-500">777</span></span>
+                <div class="flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+                    <span class="text-[8px] text-gray-500 uppercase tracking-[0.4em] font-bold italic">Network Secure Protocol</span>
+                </div>
+            </div>
         </div>
+        <nav class="hidden lg:flex gap-10 text-[10px] uppercase tracking-[0.3em] font-bold text-gray-500">
+            <a href="#" class="hover:text-blue-500 transition">Терминал</a>
+            <a href="#" class="hover:text-blue-500 transition">Стейкинг</a>
+            <a href="#" class="hover:text-blue-500 transition">Безопасность</a>
+        </nav>
+        <button onclick="openModal()" class="premium-card px-8 py-3 text-[10px] font-800 uppercase tracking-widest hover:border-blue-500/50 transition">Вход в систему</button>
     </header>
 
-    <main class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-8">
         
-        <!-- Главный Баланс -->
-        <div class="lg:col-span-2 glass-card p-10 relative overflow-hidden flex flex-col justify-center">
-            <h2 class="text-gray-500 text-[10px] mb-4 uppercase tracking-[0.4em] font-bold">Текущие активы ЦР</h2>
-            <div class="text-7xl font-800 mb-8 tracking-tighter">
-                <span id="balance">0</span><span class="text-blue-500">.00</span> <span class="text-2xl align-top text-gray-400 font-light italic">₽Ц</span>
+        <!-- Основной виджет баланса -->
+        <div class="lg:col-span-3 premium-card p-12 relative overflow-hidden">
+            <div class="flex justify-between items-start mb-10">
+                <div>
+                    <h2 class="text-gray-600 text-[11px] uppercase tracking-[0.5em] font-800 mb-2">Общий баланс активов</h2>
+                    <div class="text-8xl font-800 tracking-tighter leading-none">
+                        0<span class="text-blue-600">.00</span> <span class="text-2xl align-top text-gray-800 italic">₽Ц</span>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <div class="text-[10px] text-gray-600 uppercase mb-1 font-bold tracking-widest">Статус счета</div>
+                    <div class="text-[10px] text-yellow-500 font-800 uppercase italic">Ожидает верификации</div>
+                </div>
             </div>
-            
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <button onclick="openModal()" class="btn-main p-5 rounded-2xl text-center font-800 text-[10px] uppercase tracking-widest transition-all active:scale-95 hover:brightness-110">Внести</button>
-                <button class="glass-card p-5 rounded-2xl text-center font-bold text-[10px] uppercase tracking-widest hover:bg-white/5">Вывести</button>
-                <button class="glass-card p-5 rounded-2xl text-center font-bold text-[10px] uppercase tracking-widest hover:bg-white/5">Обмен</button>
-                <button class="glass-card p-5 rounded-2xl text-center font-bold text-[10px] uppercase tracking-widest hover:bg-white/5 opacity-40">NFT-Карта</button>
+
+            <!-- Сетка действий -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+                <button onclick="openModal()" class="btn-action p-6 text-[10px] font-800 uppercase tracking-widest">Пополнение</button>
+                <button onclick="openModal()" class="btn-action p-6 text-[10px] font-800 uppercase tracking-widest">Вывод</button>
+                <button onclick="openModal()" class="btn-action p-6 text-[10px] font-800 uppercase tracking-widest">Конвертация</button>
+                <button onclick="openModal()" class="btn-action p-6 text-[10px] font-800 uppercase tracking-widest">История</button>
+            </div>
+
+            <!-- Область будущего графика -->
+            <div class="chart-placeholder rounded-2xl border border-white/5 flex items-end">
+                <div class="chart-line"></div>
+                <div class="w-full h-full flex items-center justify-center">
+                    <span class="text-[9px] uppercase tracking-[1em] text-gray-800 font-bold">Market Activity Tracking</span>
+                </div>
             </div>
         </div>
 
-        <!-- Виджет Стейкинга -->
-        <div class="glass-card p-10 flex flex-col justify-between border-t-4 border-blue-500">
-            <div>
-                <div class="flex justify-between items-center mb-8">
-                    <h3 class="text-xl font-bold italic tracking-tighter">STAKING 2.0</h3>
-                    <div class="text-[10px] bg-green-500/20 text-green-400 px-3 py-1 rounded-full font-bold">PROFITABLE</div>
-                </div>
-                <div class="text-4xl font-800 text-white mb-2">12.5% <span class="text-xs text-gray-500 font-normal">APY</span></div>
-                <p class="text-gray-500 text-xs leading-relaxed mb-6 font-light">Автоматическое начисление цифрового рубля за поддержание ликвидности узла.</p>
+        <!-- Боковая панель: Стейкинг & Инфо -->
+        <div class="lg:col-span-1 space-y-8">
+            <div class="premium-card p-8 border-t-2 border-blue-600">
+                <h3 class="text-lg font-800 italic uppercase mb-4 tracking-tighter">Стейкинг ЦР</h3>
+                <div class="text-4xl font-800 text-blue-500 mb-2 italic">12.5% <span class="text-xs text-gray-600 font-light italic">APY</span></div>
+                <p class="text-[10px] text-gray-500 leading-relaxed uppercase mb-8">Алгоритмическое начисление на остаток цифровых активов в реальном времени.</p>
+                <button onclick="openModal()" class="w-full py-4 bg-white text-black text-[10px] font-800 uppercase tracking-widest rounded-xl hover:bg-blue-500 hover:text-white transition">Активировать</button>
             </div>
-            <button class="w-full py-5 rounded-2xl bg-white text-black font-800 uppercase text-[10px] tracking-[0.2em] hover:bg-blue-500 hover:text-white transition-all">В стейкинг</button>
-        </div>
 
-        <!-- Whitepaper & Roadmap Section -->
-        <div class="lg:col-span-3 mt-12">
-            <h3 class="text-2xl font-800 uppercase italic tracking-tighter mb-10 text-center">Белая карта развития (Whitepaper)</h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="glass-card p-8 border-l-4 border-blue-500">
-                    <div class="text-blue-500 font-bold mb-4 tracking-tighter text-sm italic">PHASE 01: GENESIS</div>
-                    <h4 class="font-800 mb-3 uppercase text-sm">Интеграция с ЦБ РФ</h4>
-                    <p class="text-xs text-gray-500 font-light leading-relaxed italic">Запуск официального шлюза обмена между банковским сектором и цифровым протоколом Селина.</p>
-                </div>
-                <div class="glass-card p-8 border-l-4 border-purple-500 opacity-70">
-                    <div class="text-purple-500 font-bold mb-4 tracking-tighter text-sm italic">PHASE 02: ECOSYSTEM</div>
-                    <h4 class="font-800 mb-3 uppercase text-sm">Selin Pay 2026</h4>
-                    <p class="text-xs text-gray-500 font-light leading-relaxed italic">Внедрение оплаты QR-кодами в магазинах-партнерах с автоматическим кэшбеком в ЦР.</p>
-                </div>
-                <div class="glass-card p-8 border-l-4 border-gray-600 opacity-40">
-                    <div class="text-gray-500 font-bold mb-4 tracking-tighter text-sm italic">PHASE 03: GLOBAL</div>
-                    <h4 class="font-800 mb-3 uppercase text-sm">Cross-border Bridge</h4>
-                    <p class="text-xs text-gray-500 font-light leading-relaxed italic">Выход на международные цифровые рынки и запуск системы мгновенной конвертации валют.</p>
+            <div class="premium-card p-8">
+                <h3 class="text-xs font-800 uppercase tracking-widest mb-6 text-gray-500 italic">Сводка проекта</h3>
+                <div class="space-y-4">
+                    <div class="flex justify-between text-[10px] font-bold">
+                        <span class="text-gray-600 uppercase">Протокол:</span>
+                        <span>SELIN-ALPHA</span>
+                    </div>
+                    <div class="flex justify-between text-[10px] font-bold">
+                        <span class="text-gray-600 uppercase">Безопасность:</span>
+                        <span class="text-blue-400">SSL + ГОСТ</span>
+                    </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- Modal: Внести средства с логотипом ЦБ РФ -->
-    <div id="modal" class="fixed inset-0 z-50 items-center justify-center bg-black/95 backdrop-blur-2xl p-4">
-        <div class="modal-content glass-card max-w-sm w-full p-8 border-blue-500/40 shadow-2xl shadow-blue-500/10">
-            
-            <!-- Анимированный Логотип ЦБ -->
-            <div class="flex flex-col items-center mb-10">
-                <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mb-4 cbr-logo-pulse shadow-[0_0_30px_rgba(255,255,255,0.1)]">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org">
-                        <path d="M7 21V3H13.5C16.5376 3 19 5.46243 19 8.5C19 11.5376 16.5376 14 13.5 14H10M7 14H15M7 17H13" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-                <div class="text-[11px] uppercase tracking-[0.5em] font-800 text-blue-400">Центральный Банк</div>
-                <div class="text-[8px] text-gray-500 uppercase tracking-widest mt-1">Официальный цифровой шлюз</div>
+    <!-- Modal Terminal -->
+    <div id="modal" class="fixed inset-0 items-center justify-center bg-black/90 backdrop-blur-3xl p-6">
+        <div class="premium-card max-w-md w-full p-12 text-center border-blue-500/20">
+            <div class="w-20 h-20 mx-auto mb-8 bg-white p-2 rounded-2xl shadow-2xl">
+                <img src="9d7715cd134e61f599f9267eff20faa3_d9672acb-028e-470c-bfc0-2018c873e653.jpg" class="w-full h-full object-contain" alt="">
             </div>
-
+            <h4 class="text-xl font-800 uppercase italic mb-2 tracking-tighter">Системная авторизация</h4>
+            <p class="text-[9px] text-gray-600 uppercase tracking-[0.3em] mb-12 italic">Для выполнения операций требуется подтверждение личности</p>
+            
             <div class="space-y-4">
-                <button class="w-full glass-card p-5 flex items-center justify-between hover:bg-blue-600/10 transition-all border-l-4 border-blue-500">
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center text-blue-400 font-bold">₽Ц</div>
-                        <div class="text-left font-800 uppercase italic text-[11px] tracking-tighter">Прямой перевод ЦБ</div>
-                    </div>
-                    <span class="text-green-400 text-[8px] font-bold animate-pulse">ACTIVE</span>
-                </button>
-                
-                <button class="w-full glass-card p-5 flex items-center gap-4 opacity-40 grayscale cursor-not-allowed">
-                    <div class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-gray-500 text-xs font-bold">QR</div>
-                    <div class="text-left font-800 uppercase italic text-[11px] tracking-tighter text-gray-500">SBP Fast Pay</div>
-                </button>
+                <button class="w-full py-5 premium-card border-blue-500/30 text-[10px] font-800 uppercase tracking-widest hover:bg-blue-600/10 transition">Подключить по ID</button>
+                <button onclick="closeModal()" class="w-full py-2 text-[9px] font-bold text-gray-700 hover:text-white transition uppercase">Вернуться</button>
             </div>
-            
-            <button onclick="closeModal()" class="w-full mt-10 py-4 text-[10px] font-800 text-gray-500 hover:text-white uppercase tracking-widest transition">Закрыть терминал</button>
         </div>
     </div>
 
-    <footer class="max-w-6xl mx-auto mt-24 pb-12 text-center text-gray-700 text-[9px] uppercase tracking-[0.5em] font-medium">
-        &copy; 2026 SELIN777 ECOSYSTEM | POWERED BY CBDC PROTOCOL | SECURED BY BANK OF RUSSIA
+    <footer class="max-w-7xl mx-auto mt-24 pb-12 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="text-[9px] text-gray-800 uppercase tracking-[0.5em] font-bold italic">
+            &copy; 2026 Selin777 Infrastructure Systems. Global Secure Standard.
+        </div>
+        <div class="flex gap-8 text-[8px] text-gray-600 uppercase font-bold tracking-widest italic">
+            <span>Official Gateway</span>
+            <span>Non-Public Alpha</span>
+        </div>
     </footer>
 
     <script>
-        // Анимация накрутки баланса
-        function animateBalance(target) {
-            let current = 0;
-            const element = document.getElementById('balance');
-            const step = target / 100;
-            const interval = setInterval(() => {
-                current += step;
-                if (current >= target) {
-                    element.innerText = target.toLocaleString('ru-RU');
-                    clearInterval(interval);
-                } else {
-                    element.innerText = Math.floor(current).toLocaleString('ru-RU');
-                }
-            }, 20);
-        }
-
-        // Управление модальным окном
-        function openModal() {
-            const modal = document.getElementById('modal');
-            modal.classList.add('active');
-            modal.style.display = 'flex';
-        }
-        function closeModal() {
-            const modal = document.getElementById('modal');
-            modal.classList.remove('active');
-            setTimeout(() => { modal.style.display = 'none'; }, 400);
-        }
-
-        // Запуск анимации при загрузке
-        window.onload = () => animateBalance(777000);
-
-        // Закрытие по клику вне окна
+        function openModal() { document.getElementById('modal').classList.add('active'); document.getElementById('modal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('modal').classList.remove('active'); setTimeout(() => { document.getElementById('modal').style.display = 'none'; }, 500); }
         window.onclick = (e) => { if (e.target == document.getElementById('modal')) closeModal(); }
     </script>
 </body>
