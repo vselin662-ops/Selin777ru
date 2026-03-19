@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selin777 | Infrastructure Management</title>
+    <title>Selin777 | Global Infrastructure</title>
     
     <script src="https://unpkg.com"></script>
     <script src="https://telegram.org"></script>
@@ -13,153 +13,162 @@
     <style>
         :root { --accent: #3b82f6; --bg: #010307; }
         body { background: var(--bg); font-family: 'Manrope', sans-serif; color: white; overflow-x: hidden; }
-        .bg-glow { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%), radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 50%); z-index: -1; }
+        .bg-glow { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%), radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.04) 0%, transparent 50%); z-index: -1; }
         .glass-card { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(40px); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 28px; transition: 0.4s; }
-        .logo-frame { width: 54px; height: 54px; background: white; border-radius: 14px; padding: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
-        #ton-connect-button button { background: #3b82f6 !important; border-radius: 14px !important; font-size: 11px !important; font-weight: 800 !important; color: white !important; height: 44px !important; }
-        .btn-action { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; transition: 0.2s; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; color: #94a3b8; }
-        .btn-action:hover { background: var(--accent); color: white; border-color: transparent; box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4); }
+        .logo-frame { width: 52px; height: 52px; background: white; border-radius: 14px; padding: 3px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
+        
+        /* Новый графический символ рубля */
+        .ruble-icon {
+            display: inline-block;
+            width: 45px; height: 45px;
+            vertical-align: top;
+            margin-top: 10px;
+            margin-left: 15px;
+            border-radius: 50%;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+            animation: pulse-glow 3s infinite ease-in-out;
+            object-fit: cover;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); filter: brightness(1); }
+            50% { box-shadow: 0 0 25px rgba(59, 130, 246, 0.6); filter: brightness(1.2); }
+        }
+
+        #ton-connect-button button { background: #3b82f6 !important; border-radius: 14px !important; font-size: 10px !important; font-weight: 800 !important; height: 40px !important; }
+        .btn-action { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 18px; transition: 0.2s; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: #94a3b8; }
+        .btn-action:hover { background: var(--accent); color: white; border-color: transparent; }
+        .lang-switcher { display: flex; gap: 8px; background: rgba(255,255,255,0.05); padding: 4px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); }
+        .lang-btn { font-size: 9px; font-weight: 800; padding: 4px 8px; border-radius: 8px; cursor: pointer; transition: 0.3s; color: #475569; }
+        .lang-btn.active { background: #3b82f6; color: white; }
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(30px); z-index: 1000; align-items: center; justify-content: center; opacity: 0; transition: 0.3s; }
         .modal-overlay.active { display: flex; opacity: 1; }
-        .ledger-line { font-family: monospace; font-size: 8px; color: #3b82f6; opacity: 0.8; letter-spacing: 0.05em; margin-bottom: 2px; }
+        .ledger-line { font-family: monospace; font-size: 8px; color: #3b82f6; opacity: 0.8; margin-bottom: 2px; }
     </style>
 </head>
 <body class="p-4 md:p-10">
     <div class="bg-glow"></div>
 
-    <!-- Interface Header -->
-    <header class="max-w-6xl mx-auto flex justify-between items-start mb-20">
+    <header class="max-w-6xl mx-auto flex justify-between items-center mb-20">
         <div class="flex items-center gap-5">
-            <div class="logo-frame"><img src="logo.jpg" class="w-full h-full object-contain rounded-lg" alt="Selin777 Node"></div>
+            <div class="logo-frame"><img src="logo.jpg" class="w-full h-full object-contain rounded-lg" alt="Selin777"></div>
             <div>
-                <h1 class="text-3xl font-800 tracking-tighter uppercase italic leading-none mb-2 tracking-[-0.05em]">Selin<span class="text-blue-500">777</span></h1>
+                <h1 class="text-2xl font-800 tracking-tighter uppercase italic leading-none mb-1">Selin<span class="text-blue-500">777</span></h1>
                 <div class="flex items-center gap-2">
-                    <span id="net-indicator" class="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-pulse"></span>
-                    <span id="status-text" class="text-[7px] text-gray-500 uppercase tracking-[0.4em] font-bold font-mono">Node ID: 777-OPS | Secure Connection</span>
+                    <span class="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-pulse"></span>
+                    <span id="txt-status" class="text-[7px] text-gray-500 uppercase tracking-[0.3em] font-bold font-mono">NODE: SECURE_LINK</span>
                 </div>
             </div>
         </div>
-        <div id="ton-connect-button"></div>
+        
+        <div class="flex items-center gap-6">
+            <div class="lang-switcher">
+                <div onclick="setLang('ru')" id="btn-ru" class="lang-btn active">RU</div>
+                <div onclick="setLang('en')" id="btn-en" class="lang-btn">EN</div>
+            </div>
+            <div id="ton-connect-button"></div>
+        </div>
     </header>
 
     <main class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-8">
-        
-        <!-- Main Asset Terminal -->
         <div class="lg:col-span-3 glass-card p-12 relative overflow-hidden">
-            <div class="flex justify-between items-start mb-16">
+            <div class="flex justify-between items-start mb-14">
                 <div>
-                    <p class="text-[9px] text-gray-600 uppercase tracking-[0.5em] font-800 mb-4 italic">Liquidity Control (Digital Ruble)</p>
-                    <div class="text-8xl font-800 tracking-tighter italic">0<span class="text-blue-600">.00</span> <span class="text-2xl align-top text-gray-800 italic">₽Ц</span></div>
+                    <p id="txt-asset-label" class="text-[9px] text-gray-600 uppercase tracking-[0.5em] font-800 mb-4">Активы в управлении</p>
+                    <div class="flex items-start">
+                        <div class="text-7xl font-800 tracking-tighter italic">0<span class="text-blue-600">.00</span></div>
+                        <!-- Вшитый неоновый логотип вместо текста -->
+                        <img src="ruble.jpg" class="ruble-icon" alt="CBDC Symbol">
+                    </div>
                 </div>
                 <div class="text-right">
-                    <div id="auth-status" class="text-[8px] text-gray-500 font-800 border border-white/10 px-4 py-2 rounded-full uppercase italic tracking-widest bg-white/5">Waiting Authorization</div>
+                    <span id="txt-auth-badge" class="text-[8px] text-yellow-500 font-800 border border-yellow-500/20 px-4 py-2 rounded-full uppercase italic tracking-widest bg-yellow-500/5">Ожидание авторизации</span>
                 </div>
             </div>
 
-            <!-- Operational Controllers -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
-                <button onclick="openPanel('deposit')" class="btn-action py-6">Deposit</button>
-                <button onclick="openPanel('withdraw')" class="btn-action py-6">Withdraw</button>
-                <button onclick="openPanel('swap')" class="btn-action py-6">Swap Assets</button>
-                <button onclick="openPanel('node')" class="btn-action py-6">Node Config</button>
+                <button onclick="openPanel('deposit')" id="btn-deposit" class="btn-action py-6 text-white">Внести</button>
+                <button onclick="openPanel('withdraw')" id="btn-withdraw" class="btn-action py-6">Вывод</button>
+                <button onclick="openPanel('swap')" id="btn-swap" class="btn-action py-6">Обмен</button>
+                <button onclick="openPanel('node')" id="btn-node" class="btn-action py-6">Узел 777</button>
             </div>
 
-            <!-- High-Frequency Ledger -->
             <div class="bg-black/50 rounded-3xl p-6 border border-white/5 h-32 overflow-hidden relative">
-                <div class="absolute top-2 left-6 text-[7px] text-gray-700 font-bold uppercase tracking-[0.5em]">Real-Time Protocol Feed</div>
-                <div id="ledger-stream" class="mt-6 flex flex-col font-mono"></div>
+                <div id="txt-feed-label" class="absolute top-2 left-6 text-[7px] text-gray-700 font-bold uppercase tracking-[0.5em]">Протокол передачи данных</div>
+                <div id="ledger-stream" class="mt-6 flex flex-col font-mono text-[8px]"></div>
             </div>
         </div>
 
-        <!-- Infrastructure Sidebar -->
         <div class="lg:col-span-1 glass-card p-10 flex flex-col justify-between border-t-4 border-blue-600">
             <div>
-                <h3 class="text-[10px] font-800 uppercase tracking-[0.4em] mb-8 text-blue-500 italic font-mono">Infrastructure Hub</h3>
+                <h3 id="txt-side-title" class="text-[10px] font-800 uppercase tracking-[0.4em] mb-8 text-blue-500 italic">ИНФРАСТРУКТУРА</h3>
                 <div class="space-y-6">
-                    <div>
-                        <p class="text-[7px] text-gray-700 uppercase font-bold mb-1">Standard:</p>
-                        <p class="text-[10px] font-800 text-gray-400">ISO 20022 Verified</p>
-                    </div>
-                    <div>
-                        <p class="text-[7px] text-gray-700 uppercase font-bold mb-1">Security:</p>
-                        <p class="text-[10px] font-800 text-gray-400">AES-256-GCM GOST</p>
-                    </div>
+                    <div><p class="text-[7px] text-gray-700 uppercase font-bold mb-1">Standard:</p><p class="text-[10px] font-800 text-gray-400 italic">ISO 20022 Global</p></div>
+                    <div><p class="text-[7px] text-gray-700 uppercase font-bold mb-1">Encryption:</p><p class="text-[10px] font-800 text-gray-400 italic">AES-256-GCM GOST</p></div>
                 </div>
             </div>
-            <div id="wallet-data" class="text-[7px] text-gray-800 font-bold uppercase font-mono break-all opacity-40 italic">Unauthorized Session</div>
+            <div id="txt-session" class="text-[7px] text-gray-800 font-bold uppercase font-mono italic opacity-40 italic">Сессия не авторизована</div>
         </div>
     </main>
 
-    <!-- Operational Terminals -->
     <div id="terminal-overlay" class="modal-overlay">
         <div class="glass-card max-w-md w-full p-12 text-center border-blue-500/30">
-            <h4 id="terminal-header" class="text-2xl font-800 uppercase italic mb-6 tracking-tighter text-blue-500">Terminal</h4>
-            <div id="terminal-content" class="text-[11px] text-gray-400 uppercase tracking-[0.2em] leading-[2.5] mb-12 italic font-bold"></div>
-            <button onclick="closePanel()" class="w-full py-5 btn-action text-white hover:bg-blue-600 transition tracking-[0.3em]">Close Gateway</button>
+            <h4 id="modal-header" class="text-2xl font-800 uppercase italic mb-6 text-blue-500">Терминал</h4>
+            <div id="modal-content" class="text-[11px] text-gray-400 uppercase tracking-[0.2em] mb-12 italic font-bold"></div>
+            <button onclick="closePanel()" id="btn-close" class="w-full py-5 btn-action text-white hover:bg-blue-600 transition">Закрыть шлюз</button>
         </div>
     </div>
 
-    <footer class="max-w-6xl mx-auto mt-32 pb-12 flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-800 font-bold uppercase tracking-[0.5em] italic">
-        <span>&copy; 2026 Selin777 Infrastructure Protocol</span>
-        <span class="opacity-50">Authorized Financial Software</span>
-    </footer>
-
     <script>
+        const translations = {
+            ru: { status: "УЗЕЛ: SECURE_LINK", assetLabel: "Активы в управлении", authBadge: "Ожидание авторизации", deposit: "Внести", withdraw: "Вывод", swap: "Обмен", node: "Узел 777", feedLabel: "Протокол передачи данных", sideTitle: "ИНФРАСТРУКТУРА", session: "Сессия не авторизована", btnClose: "Закрыть шлюз" },
+            en: { status: "NODE: SECURE_LINK", assetLabel: "Assets Under Management", authBadge: "Awaiting Authorization", deposit: "Deposit", withdraw: "Withdraw", swap: "Swap Assets", node: "Node Config", feedLabel: "Data Transmission Protocol", sideTitle: "INFRASTRUCTURE", session: "Session Unauthorized", btnClose: "Close Gateway" }
+        };
+
+        function setLang(lang) {
+            document.getElementById('btn-ru').classList.toggle('active', lang === 'ru');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            const t = translations[lang];
+            document.getElementById('txt-status').innerText = t.status;
+            document.getElementById('txt-asset-label').innerText = t.assetLabel;
+            document.getElementById('txt-auth-badge').innerText = t.authBadge;
+            document.getElementById('btn-deposit').innerText = t.deposit;
+            document.getElementById('btn-withdraw').innerText = t.withdraw;
+            document.getElementById('btn-swap').innerText = t.swap;
+            document.getElementById('btn-node').innerText = t.node;
+            document.getElementById('txt-feed-label').innerText = t.feedLabel;
+            document.getElementById('txt-side-title').innerText = t.sideTitle;
+            document.getElementById('txt-session').innerText = t.session;
+            document.getElementById('btn-close').innerText = t.btnClose;
+            localStorage.setItem('selin_lang', lang);
+        }
+
+        window.onload = () => { setLang(localStorage.getItem('selin_lang') || 'ru'); };
+
         const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
             manifestUrl: 'https://vselin662-ops.github.io',
             buttonRootId: 'ton-connect-button'
         });
 
-        tonConnectUI.onStatusChange(wallet => {
-            const ind = document.getElementById('net-indicator');
-            const stat = document.getElementById('status-text');
-            const auth = document.getElementById('auth-status');
-            const wall = document.getElementById('wallet-data');
-
-            if (wallet) {
-                ind.classList.replace('bg-yellow-500', 'bg-green-500');
-                stat.innerText = "Node ID: 777-OPS | Connected to TON Mainnet";
-                auth.innerText = "Identity Verified";
-                auth.classList.replace('text-gray-500', 'text-green-500');
-                wall.innerText = wallet.account.address;
-                wall.style.opacity = "1";
-            } else {
-                ind.classList.replace('bg-green-500', 'bg-yellow-500');
-                stat.innerText = "Node ID: 777-OPS | Secure Connection";
-                auth.innerText = "Waiting Authorization";
-                wall.style.opacity = "0.4";
-            }
-        });
-
         function openPanel(type) {
-            const overlay = document.getElementById('terminal-overlay');
-            const header = document.getElementById('terminal-header');
-            const content = document.getElementById('terminal-content');
-
-            const modules = {
-                deposit: ["Asset Deposit Gate", "Select Liquidity Source:<br>● Central Bank Digital Ruble Platform<br>● Cross-Border Bridge (TON Assets)<br>● Fiat-to-CBDC Settlement Protocol"],
-                withdraw: ["Asset Withdrawal Gate", "Available Exit Nodes:<br>● Personalized TON Wallet ID<br>● Partner Bank FIAT Settlement (MIR)<br>● SBP 2.0 Settlement Core"],
-                swap: ["Asset Swap Engine", "Market Exchange Ratio:<br>1.00 TON / 642.50 ₽Ц<br>Transaction Fee: 0.1%<br>Liquidity Pool: ACTIVE"],
-                node: ["System Configuration", "Local Node Status:<br>CPU: 12% | LATENCY: 18ms<br>STORAGE: 512GB (ENC: AES-256)<br>LOCATION: MOSCOW INFRA HUB"]
-            };
-
-            header.innerText = modules[type][0];
-            content.innerHTML = modules[type][1];
-            overlay.classList.add('active');
+            const lang = localStorage.getItem('selin_lang') || 'ru';
+            document.getElementById('terminal-overlay').classList.add('active');
+            const h = document.getElementById('modal-header');
+            const c = document.getElementById('modal-content');
+            h.innerText = lang === 'ru' ? "Управление" : "Management";
+            c.innerHTML = lang === 'ru' ? "Система ожидает авторизации узла.<br>Доступ ограничен протоколом безопасности Selin777." : "System awaiting node authorization.<br>Access restricted by Selin777 security protocol.";
         }
 
         function closePanel() { document.getElementById('terminal-overlay').classList.remove('active'); }
 
-        // Live Ledger Engine
         setInterval(() => {
-            const stream = document.getElementById('ledger-stream');
-            const line = document.createElement('div');
-            line.className = 'ledger-line';
-            const h = Math.random().toString(36).substring(7).toUpperCase();
-            line.innerText = `[${new Date().toLocaleTimeString()}] SYNC_BLOCK: #${Math.floor(Math.random()*10000)} -> BROADCASTER: CBR_NODE_07 -> HASH: ${h}... OK.`;
-            if (stream.childNodes.length > 5) stream.removeChild(stream.firstChild);
-            stream.appendChild(line);
-        }, 2500);
+            const s = document.getElementById('ledger-stream');
+            const l = document.createElement('div');
+            l.className = 'ledger-line';
+            l.innerText = `[${new Date().toLocaleTimeString()}] BLOCK_SYNC: #${Math.floor(Math.random()*10000)} -> HASH: ${Math.random().toString(36).substring(7).toUpperCase()}... OK.`;
+            if (s.childNodes.length > 5) s.removeChild(s.firstChild);
+            s.appendChild(l);
+        }, 3000);
     </script>
 </body>
 </html>
